@@ -20,7 +20,10 @@ if torch.cuda.is_available():
     sources += ['src/functions_cuda.c']
     headers += ['src/functions_cuda.h']
     defines.append(('WITH_CUDA', None))
-    libraries += ["cudart", "cudadevrt"]
+    # This was causing trouble on AWS server (p2.xlarge) with cuda
+    # AMI deep learning Ubuntu
+    #libraries += ["cudart", "cudadevrt"] 
+    
     with_cuda = True
     extra_objects = ['src/functions.link.cu.o', 'src/internals.cu.o', 'src/functions_cuda_kernel.cu.o']
 
